@@ -1,18 +1,53 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
+
+
 int main(){
+
     //creation
     RenderWindow window(VideoMode(800,600), "SFML-Game")
-
+    window.setFramerateLimit(60);
+    window.setKeyRepeatEnabled(false);
     bool game = true;
+    
+    Event event;
 
+    //gameloop
     while (game == true)
     {
+        //events
+        while (window.pollEvent(event))
+        {
+            //checking event type. if key event
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::A)
+            {
+                
+            }
+
+            if (event.type == Event::KeyReleased)
+            {
+                /* code */
+            }
+            
+            if (event.type == Event::Closed)
+            {
+                game = false;
+            }
+            
+        }
         
+        //logic
+        
+
+        // rendering
+        window.clear();
+
+        window.display();
     }
     
-    //clean your sh up
+    //clean up
     window.close();
+
     return 0;
 }
