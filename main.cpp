@@ -6,13 +6,14 @@ using namespace sf;
 int main(){
 
     //creation
-    RenderWindow window(VideoMode(800,600), "SFML-Game")
+    RenderWindow window(VideoMode(800,600), "SFML-Game");
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
     bool game = true;
     
     Event event;
-
+    //variables
+    int mouseX = 0,mouseY = 0;
     //gameloop
     while (game == true)
     {
@@ -28,6 +29,11 @@ int main(){
             if (event.type == Event::KeyReleased)
             {
                 /* code */
+            }
+            if (event.type == Event::MouseMoved)
+            {
+                mouseX = event.mouseMove.x; //x position
+                mouseY = event.mouseMove.y; // y position
             }
             
             if (event.type == Event::Closed)
