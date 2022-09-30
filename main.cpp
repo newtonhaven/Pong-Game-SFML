@@ -20,14 +20,23 @@ int main(){
     bool down = false;
     //variables
     int yVelocityPad1 = 0;
-
+    int xVelocityBall = -4;
+    int yVelocityBall = -4;
+    int yVelocityPad2 = 0;
     //resorces
 
     Font font;
     if (font.loadFromFile("res/arial.tff") == 0 )
         return 1;
-    //images
     
+    Text score;
+    score.setFont(font);
+    score.setCharacterSize(30);
+    score.setColor(Color::Red);
+    score.setPosition(250,10);
+    score.setString("0 : 0");
+
+    //images
     Texture textPlayer;
     if (!textPlayer.loadFromFile("res/pad.png"))
         return -1;    
@@ -41,7 +50,9 @@ int main(){
         return -1;    
     
     //sound
-    //SoundBuffer hit;
+    //SoundBuffer hit ;
+    //Sound hit;
+    hit.setBuffer(hit);
     //if (!hit.loadFromFile("res/hit.wav"))
     //    return -1;
         
@@ -115,7 +126,7 @@ int main(){
         }
 
         pad1.move(0,yVelocityPad1);
-
+        //pad out of screen check
         if (pad1.getPosition().y < 0)
         {
             pad1.setPosition(50,0);
@@ -125,9 +136,45 @@ int main(){
         {
             pad1.setPosition(50,500);
         }
+        //collision pad1
+        if (ball.getGlobalBounds().intersects(pad1.getGlobalBounds())==true)
+        {
+            xVelocityBall = - yVelocityBall;
+        }
+        //collision pad2
+        if (ball.getGlobalBounds().intersects(pad2.getGlobalBounds())==true)
+        {
+            xVelocityBall = - yVelocityBall;
+        }
+
+        //pad2
+        if (ball.getPosition().y < pad2.getPosition.y)
+        {
+            yVelocityPad2 = -2;
+        }
         
+        if (ball.getPosition().y > pad2.getPosition.y)
+        {
+            yVelocityPad2 = 2;
+        }
+
+        pad2.move(0, yVelocityPad2);    
+
+        //ball
+        ball.move(xVelocityBall,yVelocityBall);
+        if ( ball.getPosition().y < 0 || ball.getPosition().y >550 )
+        {
+            yVelocityBall = -yVelocityBall;
+        }
+
         // rendering
         window.clear();
+
+        window.draw(background);
+        window.draw(pad1);
+        window.draw(pad2);
+        window.draw(ball);
+        window.draw(score);
 
         window.display();
     }
