@@ -1,7 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
 #include <sstream>
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 using namespace sf;
 
 
@@ -29,17 +30,17 @@ int main(){
     int Player1Score = 0;
     int Player2Score = 0;
 
-    //resorces
-    Font font;
-    if (font.loadFromFile("res/arial.tff") == 0 )
-        return 1;
+    // //resorces
+    // Font font;
+    // if (font.loadFromFile("res/arial.tff") == 0 )
+    //     return 1;
     
-    Text score;
-    score.setFont(font);
-    score.setCharacterSize(30);
-    score.setColor(Color::Red);
-    score.setPosition(250,10);
-    score.setString("0 : 0");
+    // Text score;
+    // score.setFont(font);
+    // score.setCharacterSize(30);
+    // //score.setColor(Color::Red);
+    // score.setPosition(250,10);
+    // score.setString("0 : 0");
 
     //images
     Texture textPlayer;
@@ -60,12 +61,12 @@ int main(){
         return -1;   
     }    
     
-    //sound
-    SoundBuffer buffer;
-    if (!buffer.loadFromFile("res/hit.wav"))
-        return -1;
-    Sound hit;
-    hit.setBuffer(buffer);
+    // //sound
+    // SoundBuffer buffer;
+    // if (!buffer.loadFromFile("res/hit.wav"))
+    //     return -1;
+    // Sound hit;
+    // hit.setBuffer(buffer);
 
     RectangleShape background;
     background.setSize(Vector2f(800,600));
@@ -153,13 +154,13 @@ int main(){
         
         if (ball.getPosition().x < -50)
         {
-            Player2Score++;
+            //Player2Score++;
             ball.setPosition(300, 200);
         }
         
         if (ball.getPosition().x < 550)
         {
-            Player1Score++;
+            //Player1Score++;
             ball.setPosition(300,200);
         }
         
@@ -203,10 +204,10 @@ int main(){
         window.draw(Player2);
         window.draw(ball);
 
-        std::stringstream text;
-        text << Player1Score << " : " << Player2Score;
-        score.setString(text.str());
-        window.draw(score);
+        // std::stringstream text;
+        // text << Player1Score << " : " << Player2Score;
+        // score.setString(text.str());
+        // window.draw(score);
 
         window.display();
     }
