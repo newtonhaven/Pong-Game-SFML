@@ -1,4 +1,7 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include <sstream>
+#include <SFML/Audio.hpp>
 using namespace sf;
 
 
@@ -19,12 +22,14 @@ int main(){
     bool up = false;
     bool down = false;
     //variables
-    int yVelocityPad1 = 0;
+    int yVelocityPlayer1 = 0;
     int xVelocityBall = -4;
     int yVelocityBall = -4;
-    int yVelocityPad2 = 0;
-    //resorces
+    int yVelocityPlayer2 = 0;
+    int Player1Score = 0;
+    int Player2Score = 0;
 
+    //resorces
     Font font;
     if (font.loadFromFile("res/arial.tff") == 0 )
         return 1;
@@ -39,41 +44,47 @@ int main(){
     //images
     Texture textPlayer;
     if (!textPlayer.loadFromFile("res/pad.png"))
-        return -1;    
-    
+    {
+        return -1;   
+    }
+     
     Texture textBall;
     if (!textBall.loadFromFile("res/ball.png"))
-        return -1;    
+    {
+        return -1;   
+    }    
     
     Texture textBacground;
     if (!textBacground.loadFromFile("res/background.png"))
-        return -1;    
+    {
+        return -1;   
+    }    
     
     //sound
-    //SoundBuffer hit ;
-    //Sound hit;
-    hit.setBuffer(hit);
-    //if (!hit.loadFromFile("res/hit.wav"))
-    //    return -1;
-        
+    SoundBuffer buffer;
+    if (!buffer.loadFromFile("res/hit.wav"))
+        return -1;
+    Sound hit;
+    hit.setBuffer(buffer);
+
     RectangleShape background;
     background.setSize(Vector2f(800,600));
     background.setPosition(0,0);
     background.setTexture(&textBacground);
 
-    RectangleShape pad1;
-    pad1.setSize(Vector2f(50,100));
-    pad1.setPosition(700,200);
-    pad1.setTexture(&textPlayer);
+    RectangleShape Player1;
+    Player1.setSize(Vector2f(50,100));
+    Player1.setPosition(700,200);
+    Player1.setTexture(&textPlayer);
 
-    RectangleShape pad2;
-    pad2.setSize(Vector2f(50,100));
-    pad2.setPosition(50,200);
-    pad2.setTexture(&textPlayer);
+    RectangleShape Player2;
+    Player2.setSize(Vector2f(50,100));
+    Player2.setPosition(700,200);
+    Player2.setTexture(&textPlayer);
     
     RectangleShape ball;
     ball.setSize(Vector2f(50,50));
-    ball.setPosition(50,200);
+    ball.setPosition(400,200);
     ball.setTexture(&textBall);
 
 
@@ -84,7 +95,9 @@ int main(){
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed)
+            {
                 game = false;
+            }
             //press
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
             {
@@ -112,53 +125,68 @@ int main(){
         //logic
         if (up == true && down == false )
         {
-            yVelocityPad1 = -5;
+            yVelocityPlayer1 = -5;
         }
         
         if (down == true && up == false)
         {
-            yVelocityPad1 = 5;
+            yVelocityPlayer1 = 5;
         }
 
         if (down == false && up == false || up == true && down == true )
         {
-            yVelocityPad1 = 0;
+            yVelocityPlayer1 = 0;
         }
 
-        pad1.move(0,yVelocityPad1);
+        Player1.move(0,yVelocityPlayer1);
+
         //pad out of screen check
-        if (pad1.getPosition().y < 0)
+        if (Player1.getPosition().y < 0)
         {
-            pad1.setPosition(50,0);
+            Player1.setPosition(50,0);
         }
         
-        if (pad1.getPosition().y >500 )
+        if (Player1.getPosition().y >500 )
         {
-            pad1.setPosition(50,500);
+            Player1.setPosition(50,500);
         }
-        //collision pad1
-        if (ball.getGlobalBounds().intersects(pad1.getGlobalBounds())==true)
+        
+        if (ball.getPosition().x < -50)
+        {
+            Player2Score++;
+            ball.setPosition(300, 200);
+        }
+        
+        if (ball.getPosition().x < 550)
+        {
+            Player1Score++;
+            ball.setPosition(300,200);
+        }
+        
+
+        //collision Player1
+        if (ball.getGlobalBounds().intersects(Player1.getGlobalBounds())==true)
         {
             xVelocityBall = - yVelocityBall;
         }
-        //collision pad2
-        if (ball.getGlobalBounds().intersects(pad2.getGlobalBounds())==true)
+        //collision Player2
+        if (ball.getGlobalBounds().intersects(Player2.getGlobalBounds())==true)
         {
             xVelocityBall = - yVelocityBall;
         }
 
-        //pad2
-        if (ball.getPosition().y < pad2.getPosition.y)
+        //Player2
+        if (ball.getPosition().y < Player2.getPosition().y)
         {
-            yVelocityPad2 = -2;
+            yVelocityPlayer2 = -2;
         }
         
-        if (ball.getPosition().y > pad2.getPosition.y)
+        if (ball.getPosition().y > Player2.getPosition().y)
         {
-            yVelocityPad2 = 2;
+            yVelocityPlayer2 = 2;
         }
 
-        pad2.move(0, yVelocityPad2);    
+        Player2.move(0, yVelocityPlayer2);    
 
         //ball
         ball.move(xVelocityBall,yVelocityBall);
@@ -171,15 +199,19 @@ int main(){
         window.clear();
 
         window.draw(background);
-        window.draw(pad1);
-        window.draw(pad2);
+        window.draw(Player1);
+        window.draw(Player2);
         window.draw(ball);
+
+        std::stringstream text;
+        text << Player1Score << " : " << Player2Score;
+        score.setString(text.str());
         window.draw(score);
 
         window.display();
     }
     
-    //clean up
+
     window.close();
 
     return 0;
