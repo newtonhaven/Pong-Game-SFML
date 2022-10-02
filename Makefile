@@ -1,10 +1,10 @@
 all: compile link
 
 compile: 
-	g++ -c main.cpp -I"C:\Users\dervi\Documents\Libraries\SFML-2.5.1\include" -DSFML_STATIC
+	g++ -c main.cpp -Isrc/include
 
 link:
-	g++ main.o -o main -L"C:\Users\dervi\Documents\Libraries\SFML-2.5.1\lib" -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -mwindows -lsfml-main   
+	g++ main.o -o main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 clean:
 	del -rf main.exe *.o
