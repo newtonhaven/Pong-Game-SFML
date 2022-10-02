@@ -29,7 +29,7 @@ int main(){
 
     // //resorces
     // Font font;
-    // if (!font.loadFromFile("Arimo-Regular.tff"))
+    // if (!font.loadFromFile("Arimo.ttf"))
     //     return 1;
     
     // Text score;
