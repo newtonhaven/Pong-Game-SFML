@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
-//#include <iostream>
-//#include <sstream>
-//#include <SFML/Audio.hpp>
+#include <sstream>
+#include <SFML/Audio.hpp>
 using namespace sf;
 
 int main(){
 
     //creation
-    RenderWindow window(VideoMode(800,600), "Ping Pong");
+    RenderWindow window(VideoMode(800,600), "Pong Game");
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
 
@@ -26,20 +25,27 @@ int main(){
     int yVelocityBall = -4;
     int Player1Score = 0;
     int Player2Score = 0;
+    bool winner = false;
 
     // //resorces
-    // Font font;
-    // if (!font.loadFromFile("Arimo.ttf"))
-    //     return 1;
+    Font font;
+    if (!font.loadFromFile("res/arial.ttf"))
+        return 1;
     
-    // Text score;
-    // score.setFont(font);
-    // score.setCharacterSize(30);
-    // //score.setColor(Color::Red);
-    // score.setPosition(250,10);
-    // score.setString("0 : 0");
+    Text score;
+    score.setFont(font);
+    score.setCharacterSize(30);
+    score.setPosition(250,10);
+    score.setString("0 : 0");
+
+    Text credits;
+    credits.setFont(font);
+    credits.setCharacterSize(15);
+    credits.setPosition(400,10);
+    credits.setString("Press Numbers For change Skins not numlock numbers\n1-football Ball by gothicfan95\n2-Cannonball by Dansevenstar\n3-Egg Blast by OnTheBus\4-Sky background by PauR\n5-Background Night by Alekei\n6-Starfield background by Sauer2\nall res from opengameart.org");
 
     //loading images and checking if files are opened
+
     Texture textPlayer;
     if (!textPlayer.loadFromFile("res/player.png"))
     {
@@ -59,12 +65,12 @@ int main(){
     }    
     
     //sound
-    // SoundBuffer buffer;
-    // if (!buffer.loadFromFile("res/hit.wav"))
-    //     return -1;
-    // Sound hitSound;
-    // hitSound.setBuffer(buffer);
-
+    SoundBuffer buffer;
+    if (!buffer.loadFromFile("res/hit.wav"))
+        return -1;
+    Sound hitSound;
+    hitSound.setBuffer(buffer);
+    
     // textures
     RectangleShape background;
     background.setSize(Vector2f(800,600));
@@ -193,28 +199,27 @@ int main(){
   
         if (ball.getPosition().x < -50)//ball limit left of the screen
         {
-            //Player2Score++;
+            Player2Score++;
             ball.setPosition(300, 200);
         }
         
         if (ball.getPosition().x > 750)//ball limit right of the screen
         {
-            //Player1Score++;
-            ball.setPosition(300,200);
+            Player1Score++;
+            ball.setPosition(300, 200);
         }
-        
 
         //ball collision for Player1
         if (ball.getGlobalBounds().intersects(Player1.getGlobalBounds()) == true)
         {
             xVelocityBall = -xVelocityBall;
-            //hitSound.play();
+            hitSound.play();
         }
         //ball collision for Player2
         if (ball.getGlobalBounds().intersects(Player2.getGlobalBounds())==true)
         {
             xVelocityBall = -xVelocityBall;
-            //hitSound.play();
+            hitSound.play();
         }
 
         //player 2 (follows ball)
@@ -247,15 +252,14 @@ int main(){
         window.draw(Player2);
         window.draw(ball);
 
-        // std::stringstream text;
-        // text << Player1Score << " : " << Player2Score;
-        // score.setString(text.str());
-        // window.draw(score);
-
+        std::stringstream text;
+        text << Player1Score << " : " << Player2Score;
+        score.setString(text.str());
+        window.draw(score);
+        window.draw(credits);
         window.display();
     }
     
-
     window.close();
 
     return 0;
