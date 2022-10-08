@@ -1,10 +1,9 @@
 ____________________________________________
-SFML PONG GAME
+SFML PONG GAME (singleplayer or local multiplayer)
 _____________________________________________
-
-NOTE: Sound and Score system codes are exist in main.cpp but commented because (I use VS Code with SFML(MinGW)) gives error 
-while try to load font. Also, sound system gives error. I tried to fix both but didn't work, but i think codes are correct, so that lines are commented.        
-I didn't add sfml files you can create src folder and copy "lib" and "include" folders from SFML(MinGW) there, makefile is exist already.
+Keys:
+W & S keys for player 1(left)
+Up & Down arrow keys for player 2 (right)(if 7 selected otherwise it's ai)
 
     Press Numbers For change Skins (not numlock numbers)
     
@@ -15,5 +14,7 @@ I didn't add sfml files you can create src folder and copy "lib" and "include" f
     4-Sky background (by PauR)
     5-Background Night (by Alekei)
     6-Starfield background (by Sauer2)
+
+    7- Multiplayer
 
     all res from opengameart.org

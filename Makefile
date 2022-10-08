@@ -1,10 +1,8 @@
 all: compile link
 
-compile: 
+compile:
 	g++ -c main.cpp -Isrc/include
-
-link:
-	g++ main.o -o main -Lsrc/lib -lsfml-graphics -lsfml-window -lsfml-system
-
+link: 
+	g++ main.o -o main -Lsrc/lib -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 clean:
 	del -rf main.exe *.o
