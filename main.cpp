@@ -9,9 +9,6 @@ int main(){
     RenderWindow window(VideoMode(800,600), "Pong Game");
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
-
-    bool game = true; //var for start game loop
-    
     Event event;
 
     //states
@@ -31,8 +28,7 @@ int main(){
     bool multiplayer = false;
     // //resorces
     Font font;
-    if (!font.loadFromFile("res/arial.ttf"))
-        return 1;
+    if (!font.loadFromFile("res/arial.ttf")) return 1;
     
     Text score;
     score.setFont(font);
@@ -49,27 +45,15 @@ int main(){
     //loading images and checking if files are opened
 
     Texture textPlayer;
-    if (!textPlayer.loadFromFile("res/player.png"))
-    {
-        return -1;   
-    }
-     
+    if (!textPlayer.loadFromFile("res/player.png")) return -1;   
     Texture textBall;
-    if (!textBall.loadFromFile("res/ball.png"))
-    {
-        return -1;   
-    }    
-    
+    if (!textBall.loadFromFile("res/ball.png")) return -1;  
     Texture textBacground;
-    if (!textBacground.loadFromFile("res/sky.png"))
-    {
-        return -1;   
-    }    
-    
+    if (!textBacground.loadFromFile("res/sky.png")) return -1;   
     //sound
     SoundBuffer buffer;
-    if (!buffer.loadFromFile("res/hit.wav"))
-        return -1;
+    if (!buffer.loadFromFile("res/hit.wav")) return -1;
+
     Sound hitSound;
     hitSound.setBuffer(buffer);
     
@@ -95,164 +79,92 @@ int main(){
     ball.setTexture(&textBall);
 
 
-    //gameloop
-    while (game == true)
+    //GAMELOOP
+    while (window.isOpen() && !Keyboard::isKeyPressed(Keyboard::Escape))
     {
         //events
         while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed)
-            {
-                game = false;
-            }
-            //press
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up)
-            {
-                up = true;
-            }
+            if (event.type == Event::Closed) window.close();
 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Down)
-            {
-                down = true;
-            }
+            //player 1 key press
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up) up = true;
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Down) down = true;
+            //player 1 key relase
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Up) up = false;
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Down) down = false;
+            //player 2 key press
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::W) wkey = true;
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::S) skey = true;
             //relase
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Up)
-            {
-                up = false;
-            }
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::W) wkey = false;
+            if (event.type == Event::KeyReleased && event.key.code == Keyboard::S) skey = false;
 
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Down)
-            {
-                down = false;
-            }
-            //other player
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::W)
-            {
-                wkey = true;
-            }
-
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::S)
-            {
-                skey = true;
-            }
-            //relase
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::W)
-            {
-                wkey = false;
-            }
-
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::S)
-            {
-                skey = false;
-            }
             //background and ball texture change
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num1)
             {
-                if (!textBall.loadFromFile("res/ball.png"))
-                {
-                    return -1;   
-                }  
+                if (!textBall.loadFromFile("res/ball.png")) return -1;
             } 
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num2)
             {
-                if (!textBall.loadFromFile("res/canon.png"))
-                {
-                    return -1;   
-                }  
+                if (!textBall.loadFromFile("res/canon.png")) return -1;
             }  
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num3)
             {
-                if (!textBall.loadFromFile("res/egg.png"))
-                {
-                    return -1;   
-                }  
+                if (!textBall.loadFromFile("res/egg.png")) return -1;
             }  
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num4)
             {
-                if (!textBacground.loadFromFile("res/sky.png"))
-                {
-                    return -1;   
-                }  
+                if (!textBacground.loadFromFile("res/sky.png")) return -1;
             } 
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num5)
             {
-                if (!textBacground.loadFromFile("res/moon.png"))
-                {
-                    return -1;   
-                }   
+                if (!textBacground.loadFromFile("res/moon.png")) return -1; 
             }  
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num6)
             {
-                if (!textBacground.loadFromFile("res/starfield.png"))
-                {
-                    return -1;   
-                }   
+                if (!textBacground.loadFromFile("res/starfield.png")) return -1; 
             }
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num7)
-            {
-                multiplayer = true;
-            }
+
+            // MULTIPLAYER
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num7) multiplayer = true;
         }
         
-        //logic
-        if (wkey == true && skey == false )
-        {
-            yVelocityPlayer1 = -5;
-        }
-        
-        if (skey == true && wkey == false)
-        {
-            yVelocityPlayer1 = 5;
-        }
+        //LOGIC
+        if ( wkey == true && skey == false ) yVelocityPlayer1 = -5;
+        if ( skey == true && wkey == false ) yVelocityPlayer1 = 5;
+        if ( skey == false && wkey == false || wkey == true && skey == true ) yVelocityPlayer1 = 0;
 
-        if (skey == false && wkey == false || wkey == true && skey == true )
-        {
-            yVelocityPlayer1 = 0;
-        }
+        //move player
 
-        Player1.move(0,yVelocityPlayer1); //move player
 
-        //screen limit for player
-        if (Player1.getPosition().y < 0)//top
-        {
-            Player1.setPosition(50,0);
-        }
-        
-        if (Player1.getPosition().y >500 )//bottom
-        {
-            Player1.setPosition(50,500);
-        }
+        //SCREEN LIMITS & COLLISION
+        //screen limit for player1
+        if ( Player1.getPosition().y < 0 ) Player1.setPosition(50,0); // TOP
+        if ( Player1.getPosition().y > 500 )Player1.setPosition(50,500); //BOTTOM
         //screen limit for player2
-        if (Player2.getPosition().y < 0)//top
-        {
-            Player2.setPosition(700,0);
-        }
-        
-        if (Player2.getPosition().y >500 )//bottom
-        {
-            Player2.setPosition(700,500);
-        }
+        if ( Player2.getPosition().y < 0 )Player2.setPosition(700,0); // TOP
+        if ( Player2.getPosition().y > 500 )Player2.setPosition(700,500); // BOTTOM
         //ball limits
-        if (ball.getPosition().x < -50)//ball limit left of the screen
+        if ( ball.getPosition().x < -50)//left of the screen
         {
             Player2Score++;
             ball.setPosition(300, 200);
         }
-        
-        if (ball.getPosition().x > 750)//ball limit right of the screen
+        if ( ball.getPosition().x > 750)//right of the screen
         {
             Player1Score++;
             ball.setPosition(300, 200);
         }
-
+        if ( ball.getPosition().y < 0 || ball.getPosition().y >550 ) yVelocityBall = -yVelocityBall; // Top & bottom
         //ball collision for Player1
-        if (ball.getGlobalBounds().intersects(Player1.getGlobalBounds()) == true)
+        if ( ball.getGlobalBounds().intersects(Player1.getGlobalBounds()) == true )
         {
             xVelocityBall = -xVelocityBall;
             hitSound.play();
         }
         //ball collision for Player2
-        if (ball.getGlobalBounds().intersects(Player2.getGlobalBounds())==true)
+        if ( ball.getGlobalBounds().intersects(Player2.getGlobalBounds()) == true )
         {
             xVelocityBall = -xVelocityBall;
             hitSound.play();
@@ -261,45 +173,21 @@ int main(){
         //player 2 (follows ball)
         if (!multiplayer)
         {
-            if (ball.getPosition().y < Player2.getPosition().y)
-            {
-                yVelocityPlayer2 = -2;
-            }
-            
-            if (ball.getPosition().y > Player2.getPosition().y)
-            {
-                yVelocityPlayer2 = 2;
-            }
+            if ( ball.getPosition().y < Player2.getPosition().y ) yVelocityPlayer2 = -2;
+            if ( ball.getPosition().y > Player2.getPosition().y ) yVelocityPlayer2 = 2;
         }
+
         if(multiplayer)
         {
-            if (up == true && down == false )
-            {
-                yVelocityPlayer2 = -5;
-            }
-            
-            if (down == true && up == false)
-            {
-                yVelocityPlayer2 = 5;
-            }
-
-            if (down == false && up == false || up == true && down == true )
-            {
-                yVelocityPlayer2 = 0;
-            }
+            if ( up == true && down == false ) yVelocityPlayer2 = -5;
+            if ( down == true && up == false ) yVelocityPlayer2 = 5;
+            if ( down == false && up == false || up == true && down == true ) yVelocityPlayer2 = 0;
         }
-        
+
+        //movements
+        Player1.move(0,yVelocityPlayer1); 
         Player2.move(0, yVelocityPlayer2);    
-
-
-        //ball
         ball.move(xVelocityBall,yVelocityBall);
-
-        //ball collision for top and bottom of screen
-        if ( ball.getPosition().y < 0 || ball.getPosition().y >550 )
-        {
-            yVelocityBall = -yVelocityBall;
-        }
 
         // rendering
         window.clear();
@@ -312,8 +200,10 @@ int main(){
         std::stringstream text;
         text << Player1Score << " : " << Player2Score;
         score.setString(text.str());
+
         window.draw(score);
         window.draw(credits);
+
         window.display();
     }
     
