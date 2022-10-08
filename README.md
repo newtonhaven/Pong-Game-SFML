@@ -3,6 +3,7 @@ SFML PONG GAME (singleplayer or local multiplayer)
 _____________________________________________
 Keys:
 W & S keys for player 1(left)
+
 Up & Down arrow keys for player 2 (right)(if 7 selected otherwise it's ai)
 
     Press Numbers For change Skins (not numlock numbers)
