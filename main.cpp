@@ -87,47 +87,35 @@ int main(){
         {
             if (event.type == Event::Closed) window.close();
 
-            //player 1 key press
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Up) up = true;
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Down) down = true;
-            //player 1 key relase
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Up) up = false;
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::Down) down = false;
-            //player 2 key press
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::W) wkey = true;
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::S) skey = true;
-            //relase
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::W) wkey = false;
-            if (event.type == Event::KeyReleased && event.key.code == Keyboard::S) skey = false;
-
-            //background and ball texture change
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num1)
+            if (event.type == Event::KeyPressed) // switch for key presses
             {
-                if (!textBall.loadFromFile("res/ball.png")) return -1;
-            } 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num2)
-            {
-                if (!textBall.loadFromFile("res/canon.png")) return -1;
-            }  
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num3)
-            {
-                if (!textBall.loadFromFile("res/egg.png")) return -1;
-            }  
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num4)
-            {
-                if (!textBacground.loadFromFile("res/sky.png")) return -1;
-            } 
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num5)
-            {
-                if (!textBacground.loadFromFile("res/moon.png")) return -1; 
-            }  
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num6)
-            {
-                if (!textBacground.loadFromFile("res/starfield.png")) return -1; 
+                switch (event.key.code)
+                {
+                case Keyboard::Up: up = true; break;
+                case Keyboard::Down: down = true; break;
+                case Keyboard::W: wkey = true; break;
+                case Keyboard::S: skey = true; break;
+                case Keyboard::Num1: if (!textBall.loadFromFile("res/ball.png")) return -1; break;
+                case Keyboard::Num2: if (!textBall.loadFromFile("res/canon.png")) return -1; break;
+                case Keyboard::Num3: if (!textBall.loadFromFile("res/egg.png")) return -1; break;
+                case Keyboard::Num4: if (!textBacground.loadFromFile("res/sky.png")) return -1; break;
+                case Keyboard::Num5: if (!textBacground.loadFromFile("res/moon.png")) return -1; break;
+                case Keyboard::Num6: if (!textBacground.loadFromFile("res/starfield.png")) return -1; break;
+                case Keyboard::Num7: multiplayer = true;
+                default: break;
+                }
             }
-
-            // MULTIPLAYER
-            if (event.type == Event::KeyPressed && event.key.code == Keyboard::Num7) multiplayer = true;
+            if (event.type == Event::KeyReleased) // switch for key releases
+            {
+                switch(event.key.code)
+                {
+                case Keyboard::Up: up = false; break;
+                case Keyboard::Down: down = false; break;
+                case Keyboard::W: wkey = false; break;
+                case Keyboard::S: skey = false; break;
+                default: break;
+                }
+            }
         }
         
         //LOGIC
@@ -176,7 +164,6 @@ int main(){
             if ( ball.getPosition().y < Player2.getPosition().y ) yVelocityPlayer2 = -2;
             if ( ball.getPosition().y > Player2.getPosition().y ) yVelocityPlayer2 = 2;
         }
-
         if(multiplayer)
         {
             if ( up == true && down == false ) yVelocityPlayer2 = -5;
