@@ -26,3 +26,11 @@ Press Numbers For change Skins (not numlock numbers)
 7- Multiplayer
 
 all res from opengameart.org
+
+## Contributing
+
+Contributions to the PDF-Merger project are welcome. Please submit a pull request with any changes you would like to make.
+
+## License
+
+This project is licensed under the Unlicense License - see the [LICENSE](LICENSE) file for details.
