@@ -30,6 +30,3 @@ all res from opengameart.org
 ## Contributing
 
 Contributions to the PDF-Merger project are welcome. Please submit a pull request with any changes you would like to make.
-
-## License
-The software of this product is licensed under the [Unlicense License](LICENSE).
