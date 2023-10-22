@@ -1,32 +1,28 @@
 
 # Pong Game with SFML (singleplayer or local multiplayer)
 
-This is a simple implementation of the classic Pong game using SFML library for graphics and audio.
+### This is a implementation of the classic Pong game using SFML graphics and audio library of C++.
 
-## Keys:
+## How to Play:
 
-W & S keys for player 1(left)
+- "W & S" keys for player 1(left)
 
-Up & Down arrow keys for player 2 (right)(if 7 selected otherwise it's ai)
+- "Up & Down" arrow keys for player 2 (right)(if 7 selected otherwise it's controlled by computer)
 
-Press Numbers For change Skins (not numlock numbers)
+## Keys: (Press Numbers For change Skins (not numlock numbers))
     
-1-football Ball (by gothicfan95)
+- "1" - Football Ball (by gothicfan95)
 
-2-Cannonball (by Dansevenstar)
+- "2" - Cannonball (by Dansevenstar)
 
-3-Egg Blast (by OnTheBus)
+- "3" - Egg Blast (by OnTheBus)
 
-4-Sky background (by PauR)
+- "4" - Sky Background (by PauR)
 
-5-Background Night (by Alekei)
+- "5" - Background Night (by Alekei)
 
-6-Starfield background (by Sauer2)
+- "6" - Starfield Background (by Sauer2)
 
-7- Multiplayer
+- "7" - Multiplayer
 
-all res from opengameart.org
-
-## Contributing
-
-Contributions to the PDF-Merger project are welcome. Please submit a pull request with any changes you would like to make.
+All resources from opengameart.org
