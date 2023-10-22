@@ -1,5 +1,5 @@
 
-# Pong Game with SFML (singleplayer or local multiplayer)
+# Pong Game with SFML (singleplayer / local multiplayer)
 
 ### This is a implementation of the classic Pong game using SFML graphics and audio library of C++.
 
@@ -26,3 +26,9 @@
 - "7" - Multiplayer
 
 All resources from opengameart.org
+
+## Installation
+
+Just download and start "main.exe"
+
+no permissions needed
